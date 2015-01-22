@@ -32,20 +32,18 @@ package d3.arrays
         }
         
         public function deepEqual(a:Object, b:Object):void {
-            var bKeys:Array = [];
-            for (var bKey:Object in b) {
-                bKeys.push(bKey);
-            }
-            for (var key:Object in a) {
-                var aVal:Object = a[key];
-                var index:int = bKeys.indexOf(key);
-                assertTrue(index != -1, (context?context:"") + " b object doesn't contain key " + key);
-                bKeys.splice(index, 1);
-                var bVal:Object = b[key];
-                if (aVal is Array || aVal is Object) {
-                    deepEqual(aVal, bVal);
-                } else {
-                    assertEquals(aVal, bVal, (context?context:""));
+            if (a is Array || b is Array) {
+                assertTrue(a is Array, (context?context:"") + " a is not an array");
+                assertTrue(b is Array, (context?context:"") + " a is not an array");
+                assertEquals(a.length, b.length, (context?context:"") + " Arrays of different length");
+                for (var i:int in a) {
+                    var aVal:Object = a[i];
+                    var bVal:Object = b[i];
+                    if (aVal is Array || bVal is Array) {
+                        deepEqual(aVal, bVal);
+                    } else {
+                        assertEquals(aVal, bVal, (context?context:"") + " Array contents are different");
+                    }
                 }
             }
         }
