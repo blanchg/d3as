@@ -110,17 +110,19 @@ package d3
 				b:Number,
 				c:Number;
 			if (f == null) {
-				while (++i < n) if ((b = array[i]) != b && b >= b) { a = c = b; break; }
-				while (++i < n) if ((b = array[i]) != b) {
+				while (++i < n) { b = array[i]; if (b >= b) { a = c = b; break; } }
+				while (++i < n) { b = array[i]; if (b == b) {
 					if (a > b) a = b;
 					if (c < b) c = b;
-				}
+				} }
 			} else {
-				while (++i < n) if ((b = f.call(array, array[i], i)) != b && b >= b) { a = c = b; break; }
-				while (++i < n) if ((b = f.call(array, array[i], i)) != b) {
-					if (a > b) a = b;
-					if (c < b) c = b;
-				}
+				while (++i < n) { b = f.call(array, array[i], i); if (b >= b) { a = c = b; break; } }
+				while (++i < n) { b = f.call(array, array[i], i);
+                    if (b == b) {
+    					if (a > b) a = b;
+    					if (c < b) c = b;
+    				}
+                }
 			}
 			return [a, c];
 		}
@@ -150,17 +152,17 @@ package d3
 		}
 		
         // arrays/max
-		public static function max(array:Array, f:Function = null):Number {
+		public static function max(array:Array, f:Function = null):Object {
 			var i:int = -1,
 				n:int = array.length,
-				a:Number,
-				b:Number;
+				a:Object,
+				b:Object;
 			if (f == null) {
-				while (++i < n) if ((b = array[i]) != b && b >= b) { a = b; break; }
-				while (++i < n) if ((b = array[i]) != b && b > a) a = b;
+				while (++i < n) if ((b = array[i]) != null && b >= b) { a = b; break; }
+				while (++i < n) if ((b = array[i]) != null && b > a) a = b;
 			} else {
-				while (++i < n) if ((b = f.call(array, array[i], i)) != b && b >= b) { a = b; break; }
-				while (++i < n) if ((b = f.call(array, array[i], i)) != b && b > a) a = b;
+				while (++i < n) if ((b = f.call(array, array[i], i)) != null && b >= b) { a = b; break; }
+				while (++i < n) if ((b = f.call(array, array[i], i)) != null && b > a) a = b;
 			}
 			return a;
 		}
@@ -229,17 +231,17 @@ package d3
         }
         
         // arrays/min
-        public static function min(array:Array, f:Function = null):Number {
+        public static function min(array:Array, f:Function = null):Object {
             var i:int = -1,
                 n:int = array.length,
-                a:Number,
-                b:Number;
+                a:Object,
+                b:Object;
             if (f == null) {
-                while (++i < n) if ((b = array[i]) != b && b >= b) { a = b; break; }
-                while (++i < n) if ((b = array[i]) != b && a > b) a = b;
+                while (++i < n) if ((b = array[i]) != null && b >= b) { a = b; break; }
+                while (++i < n) if ((b = array[i]) != null && a > b) a = b;
             } else {
-                while (++i < n) if ((b = f.call(array, array[i], i)) != b && b >= b) { a = b; break; }
-                while (++i < n) if ((b = f.call(array, array[i], i)) != b && a > b) a = b;
+                while (++i < n) if ((b = f.call(array, array[i], i)) != null && b >= b) { a = b; break; }
+                while (++i < n) if ((b = f.call(array, array[i], i)) != null && a > b) a = b;
             }
             return a;
         }
@@ -328,7 +330,7 @@ package d3
         public static function zip(...arguments):Array {
             var n:int = arguments.length;
             if (n == 0) return [];
-            for (var i:int = -1, m:int = min(arguments, d3_zipLength), zips:Array = new Array(m); ++i < m;) {
+            for (var i:int = -1, m:int = Number(min(arguments, d3_zipLength)), zips:Array = new Array(m); ++i < m;) {
                 for (var j:int = -1, zip:Array = zips[i] = new Array(n); ++j < n;) {
                     zip[j] = arguments[j][i];
                 }
