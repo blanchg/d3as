@@ -9,28 +9,28 @@ package d3.arrays
 			this.compare = compare;
 		}
 		
-		public function bisect(a:Array, x, lo:int = 0, hi:int = -1):Number {
+		public function bisect(a:Array, x:Object, lo:int = 0, hi:int = -1):Number {
 			return right(a, x, lo, hi);
 		}
 		
-		public function right(a:Array, x, lo:int = 0, hi:int = -1):Number {
+		public function right(a:Array, x:Object, lo:int = 0, hi:int = -1):Number {
 			if (hi == -1) {
 				hi = a.length;
 			}
 			while (lo < hi) {
-				var mid = lo + hi >>> 1;
+				var mid:int = lo + hi >>> 1;
 				if (compare(a[mid], x) > 0) hi = mid;
 				else lo = mid + 1;
 			}
 			return lo;
 		}
 		
-		public function left(a:Array, x, lo:int = 0, hi:int = -1):Number {
+		public function left(a:Array, x:Object, lo:int = 0, hi:int = -1):Number {
 			if (hi == -1) {
 				hi = a.length;
 			}
 			while (lo < hi) {
-				var mid = lo + hi >>> 1;
+				var mid:int = lo + hi >>> 1;
 				if (compare(a[mid], x) < 0) lo = mid + 1;
 				else hi = mid;
 			}

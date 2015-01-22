@@ -1,1 +1,6 @@
-.actionScriptProperties 
+.actionScriptProperties
+bin/
+.settings/
+.project
+.flexLibProperties
+.FlexUnitSettings/
