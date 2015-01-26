@@ -8,16 +8,16 @@ package d3.arrays
         protected var keys:Array = [];
         protected var _sortKeys:Array = [];
         protected var _sortValues:Function;
-        protected var _rollup:Function;
+        protected var _rollup:Function = null;
 
         public function Nest()
         {
         }
         
         public function map(mapType:Function, array:Array, depth:int):Object {
-            if (depth >= keys.length) return rollup
-                ? rollup.call(Nest, array) : (sortValues
-                    ? array.sort(sortValues)
+            if (depth >= keys.length) return _rollup
+                ? _rollup.call(Nest, array) : (_sortValues
+                    ? array.sort(_sortValues)
                     : array);
             
             var i:int = -1,
@@ -39,7 +39,7 @@ package d3.arrays
                 }
             }
             
-            if (mapType) {
+            if (mapType != null) {
                 object = mapType();
                 setter = function(keyValue, values):void {
                     object.set(keyValue, map(mapType, values, depth));
@@ -60,7 +60,7 @@ package d3.arrays
             if (depth >= keys.length) return map;
             
             var array:Array = [],
-                sortKey:Function = sortKeys[depth++];
+                sortKey:Function = _sortKeys[depth++];
             
             map.forEach(function(key:String, keyMap:Object):void {
                 array.push(new Entry(key, _entries(keyMap, depth)));
